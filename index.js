@@ -98,7 +98,7 @@ async function getPixels() {
         totalB += b;
       }
     }
-    current.Pixels = pixelArray;
+    // current.Pixels = pixelArray;
 
     const pixelCount = pixelArray.length;
     const averageR = Math.round(totalR / pixelCount);
@@ -113,7 +113,7 @@ async function getPixels() {
     const adjustedG = Math.round(averageG * saturation * darkness);
     const adjustedB = Math.round(averageB * saturation * darkness);
     const averageArray = [adjustedR, adjustedG, adjustedB];
-    
+
     current.averageColor = averageArray;
   } catch (error) {
     console.error(error);
