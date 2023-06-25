@@ -47,7 +47,7 @@ async function drawPixels() {
 async function init() {
   while (true) {
     await drawImage();
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Delay for 10 seconds
+    await new Promise((resolve) => setTimeout(resolve, 5000)); // Delay for 10 seconds
   }
 }
 

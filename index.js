@@ -113,7 +113,7 @@ async function getPixels() {
 
 async function init() {
   //fetching every 10 seconds
-  setInterval(getTrack, 1 * 60 * 10);
+  setInterval(getTrack, 1 * 60 * 50);
 }
 
 init();
