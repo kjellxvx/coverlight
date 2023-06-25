@@ -34,7 +34,7 @@ app.get("/api", (req, res) => {
   res.send(JSON.stringify(current, null, 2));
 });
 
-const port = 2226; // Set the desired server port
+const port = 3333; // Set the desired server port
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
