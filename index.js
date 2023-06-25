@@ -5,7 +5,8 @@ const Jimp = require("jimp");
 const cors = require("cors");
 require("dotenv").config();
 
-let user = process.env.USER;
+let user = process.env.USERNAME;
+// let user = "kjellxvx"
 let apiKey = process.env.APIKEY;
 
 console.log(user)
