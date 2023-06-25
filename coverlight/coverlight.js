@@ -28,10 +28,6 @@ async function drawPixels() {
 
   ctx.imageSmoothingEnabled = false; // Disable image smoothing
 
-  let totalR = 0;
-  let totalG = 0;
-  let totalB = 0;
-
   for (let i = 0; i < Pixels.length; i++) {
     const pixel = Pixels[i];
     const x = Math.floor(i % 16) * pixelSize; // Calculate the x-coordinate of the pixel (rounded down)
@@ -39,30 +35,13 @@ async function drawPixels() {
 
     const { r, g, b } = pixel;
 
-    totalR += r;
-    totalG += g;
-    totalB += b;
-
     ctx.clearRect(x, y, pixelSize, pixelSize); // Clear the pixel area
     ctx.fillStyle = `rgb(${r}, ${g}, ${b})`; // Set the fill style to the pixel's color
     ctx.fillRect(x, y, pixelSize, pixelSize); // Draw the pixel
   }
 
-  const pixelCount = Pixels.length;
-  const averageR = Math.round(totalR / pixelCount);
-  const averageG = Math.round(totalG / pixelCount);
-  const averageB = Math.round(totalB / pixelCount);
-
-  // Adjust saturation and darkness
-  const saturation = 1.2; // Increase saturation
-  const darkness = 0.8; // Decrease brightness
-
-  const adjustedR = Math.round(averageR * saturation * darkness);
-  const adjustedG = Math.round(averageG * saturation * darkness);
-  const adjustedB = Math.round(averageB * saturation * darkness);
-
   const containerElement = document.getElementById("container");
-  containerElement.style.backgroundColor = `rgb(${adjustedR}, ${adjustedG}, ${adjustedB})`;
+  containerElement.style.backgroundColor = `rgb(${data.averageColor[0]}, ${data.averageColor[1]}, ${data.averageColor[2]})`;
 }
 
 async function init() {

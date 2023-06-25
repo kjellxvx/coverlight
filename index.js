@@ -9,8 +9,8 @@ let user = process.env.USERNAME;
 // let user = "kjellxvx"
 let apiKey = process.env.APIKEY;
 
-console.log(user)
-console.log(apiKey)
+console.log(user);
+console.log(apiKey);
 
 let url =
   "https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=" +
@@ -26,6 +26,7 @@ let current = {
   coverurl: "",
   playing: "",
   Pixels: {},
+  averageColor: [],
 };
 
 const app = express();
@@ -62,7 +63,7 @@ async function getTrack() {
 
       console.log(current);
     } else {
-      console.log(Error)
+      console.log(Error);
       throw new Error("Request failed");
     }
   } catch (error) {
@@ -78,18 +79,42 @@ async function getPixels() {
 
   try {
     const image = await Jimp.read(current.coverurl);
-    image.resize(16, 16, Jimp.RESIZE_NEAREST_NEIGHBOR);
+    image.resize(stackSize, stackSize, Jimp.RESIZE_NEAREST_NEIGHBOR);
 
     const pixelArray = [];
-    for (let y = 0; y < 16; y++) {
-      for (let x = 0; x < 16; x++) {
+    let totalR = 0;
+    let totalG = 0;
+    let totalB = 0;
+
+    for (let y = 0; y < stackSize; y++) {
+      for (let x = 0; x < stackSize; x++) {
         const rgba = Jimp.intToRGBA(image.getPixelColor(x, y));
         const { r, g, b } = rgba;
         // const average = Math.floor((r + g + b) / 3);
         pixelArray.push({ r, g, b });
+
+        totalR += r;
+        totalG += g;
+        totalB += b;
       }
     }
     current.Pixels = pixelArray;
+
+    const pixelCount = pixelArray.length;
+    const averageR = Math.round(totalR / pixelCount);
+    const averageG = Math.round(totalG / pixelCount);
+    const averageB = Math.round(totalB / pixelCount);
+
+    // Adjust saturation and darkness
+    const saturation = 1.2; // Increase saturation
+    const darkness = 0.8; // Decrease brightness
+
+    const adjustedR = Math.round(averageR * saturation * darkness);
+    const adjustedG = Math.round(averageG * saturation * darkness);
+    const adjustedB = Math.round(averageB * saturation * darkness);
+    const averageArray = [adjustedR, adjustedG, adjustedB];
+    
+    current.averageColor = averageArray;
   } catch (error) {
     console.error(error);
   }
