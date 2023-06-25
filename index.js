@@ -6,11 +6,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 let user = process.env.USERNAME;
-// let user = "kjellxvx"
 let apiKey = process.env.APIKEY;
-
-console.log(user);
-console.log(apiKey);
 
 let url =
   "https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=" +
@@ -61,7 +57,7 @@ async function getTrack() {
 
       await getPixels();
 
-      console.log(current);
+      //console.log(current);
     } else {
       console.log(Error);
       throw new Error("Request failed");
@@ -100,6 +96,7 @@ async function getPixels() {
     current.Pixels = pixelArray;
 
     const pixelCount = pixelArray.length;
+
     const averageR = Math.round(totalR / pixelCount);
     const averageG = Math.round(totalG / pixelCount);
     const averageB = Math.round(totalB / pixelCount);
@@ -116,7 +113,7 @@ async function getPixels() {
 
 async function init() {
   //fetching every 10 seconds
-  setInterval(getTrack, 1 * 60 * 100);
+  setInterval(getTrack, 1 * 60 * 10);
 }
 
 init();
