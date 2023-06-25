@@ -5,11 +5,11 @@ const Jimp = require("jimp");
 const cors = require("cors");
 require("dotenv").config();
 
-let user = "kjellxvx";
+let user = process.env.USER;
 let apiKey = process.env.APIKEY;
 
-console.log(user);
-console.log(apiKey);
+console.log(user)
+console.log(apiKey)
 
 let url =
   "https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=" +
@@ -61,7 +61,7 @@ async function getTrack() {
 
       console.log(current);
     } else {
-      console.log(Error);
+      console.log(Error)
       throw new Error("Request failed");
     }
   } catch (error) {
