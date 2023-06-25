@@ -98,7 +98,7 @@ async function getPixels() {
         totalB += b;
       }
     }
-    // current.Pixels = pixelArray;
+    current.Pixels = pixelArray;
 
     const pixelCount = pixelArray.length;
     const averageR = Math.round(totalR / pixelCount);
