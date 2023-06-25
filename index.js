@@ -8,6 +8,9 @@ require("dotenv").config();
 let user = process.env.USER;
 let apiKey = process.env.APIKEY;
 
+console.log(user)
+console.log(apiKey)
+
 let url =
   "https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=" +
   user +
@@ -58,6 +61,7 @@ async function getTrack() {
 
       console.log(current);
     } else {
+      console.log(Error)
       throw new Error("Request failed");
     }
   } catch (error) {
