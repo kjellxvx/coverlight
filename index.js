@@ -34,8 +34,8 @@ app.get("/api", (req, res) => {
   res.send(JSON.stringify(current, null, 2));
 });
 
-const port = 2224; // Set the desired server port
-app.listen(2224, () => {
+const port = 2226; // Set the desired server port
+app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
@@ -81,7 +81,7 @@ async function getPixels() {
         const rgba = Jimp.intToRGBA(image.getPixelColor(x, y));
         const { r, g, b } = rgba;
         // const average = Math.floor((r + g + b) / 3);
-        pixelArray.push({r, g, b });
+        pixelArray.push({ r, g, b });
       }
     }
     current.Pixels = pixelArray;
