@@ -33,15 +33,15 @@ async function drawPixels() {
     const x = Math.floor(i % 16) * pixelSize; // Calculate the x-coordinate of the pixel (rounded down)
     const y = Math.floor(i / 16) * pixelSize; // Calculate the y-coordinate of the pixel (rounded down)
 
-    const { r, g, b } = pixel;
+    const hexColor = pixel;
 
     ctx.clearRect(x, y, pixelSize, pixelSize); // Clear the pixel area
-    ctx.fillStyle = `rgb(${r}, ${g}, ${b})`; // Set the fill style to the pixel's color
+    ctx.fillStyle = `#${hexColor}`; // Set the fill style to the pixel's color
     ctx.fillRect(x, y, pixelSize, pixelSize); // Draw the pixel
   }
 
   const containerElement = document.getElementById("container");
-  containerElement.style.backgroundColor = `rgb(${data.averageColor[0]}, ${data.averageColor[1]}, ${data.averageColor[2]})`;
+  containerElement.style.backgroundColor = `#${data.averageColor}`;
 }
 
 async function init() {

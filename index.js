@@ -73,25 +73,24 @@ async function getTrack() {
     this.loading = false;
   }
 }
-
 async function getPixels() {
   const stackSize = 16;
+  const pixelArray = [];
+  let totalR = 0;
+  let totalG = 0;
+  let totalB = 0;
 
   try {
     const image = await Jimp.read(current.coverurl);
     image.resize(stackSize, stackSize, Jimp.RESIZE_NEAREST_NEIGHBOR);
 
-    const pixelArray = [];
-    let totalR = 0;
-    let totalG = 0;
-    let totalB = 0;
-
     for (let y = 0; y < stackSize; y++) {
       for (let x = 0; x < stackSize; x++) {
         const rgba = Jimp.intToRGBA(image.getPixelColor(x, y));
         const { r, g, b } = rgba;
-        // const average = Math.floor((r + g + b) / 3);
-        pixelArray.push({ r, g, b });
+
+        const hexValue = ((r << 16) + (g << 8) + b).toString(16).padStart(6, "0");
+        pixelArray.push(hexValue);
 
         totalR += r;
         totalG += g;
@@ -105,20 +104,15 @@ async function getPixels() {
     const averageG = Math.round(totalG / pixelCount);
     const averageB = Math.round(totalB / pixelCount);
 
-    // Adjust saturation and darkness
-    const saturation = 1.2; // Increase saturation
-    const darkness = 0.8; // Decrease brightness
-
-    const adjustedR = Math.round(averageR * saturation * darkness);
-    const adjustedG = Math.round(averageG * saturation * darkness);
-    const adjustedB = Math.round(averageB * saturation * darkness);
-    const averageArray = [adjustedR, adjustedG, adjustedB];
-
-    current.averageColor = averageArray;
+    const hexAverage = ((averageR << 16) + (averageG << 8) + averageB).toString(16).padStart(6, "0");
+    current.averageColor = hexAverage;
   } catch (error) {
     console.error(error);
   }
 }
+
+
+
 
 async function init() {
   //fetching every 10 seconds
